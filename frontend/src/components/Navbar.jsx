@@ -4,7 +4,7 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between bg-white p-5">
+    <nav className="flex justify-between bg-blue-50 p-5">
       <ul className="flex gap-3 font-medium text-xl">
         <li>
           <Link href={"/"}>Home</Link>
@@ -14,6 +14,9 @@ const Navbar = () => {
         </li>
         <li>
           <Link href={"/my-bookings"}>My Bookings</Link>
+        </li>
+        <li>
+          <Link href={"/add-destination"}>Add Destination</Link>
         </li>
       </ul>
       <div>
