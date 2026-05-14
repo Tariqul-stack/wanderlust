@@ -8,6 +8,7 @@ import { TbArrowUpRight } from "react-icons/tb";
 
 const DestinationCard = ({ destination }) => {
   const {
+    _id,
     imageUrl,
     price,
     category,
@@ -55,12 +56,12 @@ const DestinationCard = ({ destination }) => {
         {/* Duration */}
         <div className="flex items-center gap-2 text-gray-500 text-sm mb-3">
           <SlCalender className="text-base" />
-          <span>{duration}</span>
+          <span>{duration} days</span>
         </div>
 
         {/* Book Now */}
         <Link
-          href="#"
+          href={`/destinations/${_id}`}
           className="flex items-center gap-1 text-cyan-500 font-semibold text-sm hover:text-cyan-600 transition-colors"
         >
           BOOK NOW <TbArrowUpRight className="text-base" />
