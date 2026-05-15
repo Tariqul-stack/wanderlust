@@ -7,9 +7,12 @@ import { SlCalender } from "react-icons/sl";
 import { FaStar, FaCheck } from "react-icons/fa";
 import { MdEdit, MdDelete } from "react-icons/md";
 import EditModal from "@/components/EditModal";
+import DeleteDestination from "@/components/DeleteDestination";
+import { useRouter } from "next/navigation";
 
 const DestinationDetailsPage = ({ destination }) => {
   const [showEditModal, setShowEditModal] = useState(false);
+  const router = useRouter();
 
   const {
     _id,
@@ -32,11 +35,28 @@ const DestinationDetailsPage = ({ destination }) => {
 
   const handleSave = async (formData) => {
     await fetch(`http://localhost:8000/destination/${_id}`, {
-      method: "PUT",
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
     setShowEditModal(false);
+    console.log(formData);
+  };
+
+  //   const handleSave = async (formData) => {
+  //     console.log("Updated Data:", formData);
+  //     setShowEditModal(false);
+  //   };
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  // Delete handler
+  const handleDelete = async () => {
+    await fetch(`http://localhost:8000/destination/${_id}`, {
+      method: "DELETE",
+    });
+    setShowDeleteModal(false);
+    router.push("/destinations");
   };
 
   return (
@@ -45,9 +65,9 @@ const DestinationDetailsPage = ({ destination }) => {
       <div className="flex items-center justify-between mb-5">
         <Link
           href="/destinations"
-          className="flex items-center gap-2 text-gray-600 text-sm hover:text-gray-900 transition-colors"
+          className="flex items-center gap-2 text-cyan-500 hover:text-cyan-600 text-sm transition-colors"
         >
-          <LuArrowLeft className="text-base" />
+          <LuArrowLeft className="" />
           Back to Destinations
         </Link>
         <div className="flex items-center gap-3">
@@ -58,9 +78,12 @@ const DestinationDetailsPage = ({ destination }) => {
             <MdEdit className="text-base" />
             Edit
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 border border-red-400 rounded-md text-sm text-red-500 hover:bg-red-50 transition-colors">
+          <button
+            onClick={() => setShowDeleteModal(true)}
+            className="flex items-center gap-2 px-4 py-2 border border-red-400 rounded-md text-sm text-red-500 hover:bg-red-50 transition-colors"
+          >
             <MdDelete className="text-base" />
-            Cancel
+            Delete
           </button>
         </div>
       </div>
@@ -162,6 +185,13 @@ const DestinationDetailsPage = ({ destination }) => {
           destination={destination}
           onClose={() => setShowEditModal(false)}
           onSave={handleSave}
+        />
+      )}
+      {showDeleteModal && (
+        <DeleteDestination
+          destinationName={destinationName}
+          onClose={() => setShowDeleteModal(false)}
+          onDelete={handleDelete}
         />
       )}
     </div>
