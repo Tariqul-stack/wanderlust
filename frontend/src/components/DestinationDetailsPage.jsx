@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 
 const DestinationDetailsPage = ({ destination }) => {
   const [showEditModal, setShowEditModal] = useState(false);
-  const router = useRouter();
 
   const {
     _id,
@@ -49,6 +48,7 @@ const DestinationDetailsPage = ({ destination }) => {
   //   };
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const router = useRouter();
 
   // Delete handler
   const handleDelete = async () => {
